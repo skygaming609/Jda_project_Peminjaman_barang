@@ -10,10 +10,12 @@ class AuthController extends Controller
 {
     public function showLoginForm()
     {
-        // arah pertama kita saat akses
         return view('login');
     }
-
+    public function tes()
+    {
+        return view('login');
+    }
 
     public function login(Request $request)
     {
@@ -24,10 +26,8 @@ class AuthController extends Controller
 
 
         if (Auth::attempt($credentials)) {
-            // Get the authenticated user
             $user = Auth::user();
     
-            // Redirect user based on their role
             switch ($user->role) {
                 case 'super_admin':
                     return redirect()->route('backoffice.welcome');
@@ -40,10 +40,8 @@ class AuthController extends Controller
                 default:
                     return redirect()->route('layouts.index-2');
             }
-            // public_view/index.html
         }
 
-        // Authentication failed, redirect back to login with error
         return redirect()->route('login')->with('error', 'tidak valid');
     }
 
